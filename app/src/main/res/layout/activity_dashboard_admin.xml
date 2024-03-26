@@ -48,47 +48,78 @@
 
     </RelativeLayout>
 
+
+<!--serach-->
+
+
+
+    <EditText
+        android:id="@+id/searchEt"
+        android:layout_width="397dp"
+        android:layout_height="43dp"
+        android:layout_below="@id/toolbarRl"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/white"
+        android:drawableEnd="@drawable/search_photo"
+        android:hint="חיפוש"
+        android:textColor="@color/gray"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CategoriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchEt"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="80dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_category" />
+
+
     <LinearLayout
         android:id="@+id/bottomB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="7dp"
         android:orientation="horizontal">
 
 
+        <Button
+            android:id="@+id/addCategoryBtn"
+            android:layout_width="302dp"
+            android:layout_height="64dp"
+            android:layout_above="@+id/bottomB"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="550dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="-11dp"
+            android:layout_toStartOf="@+id/addP"
+            android:layout_weight="1"
+            android:background="@drawable/shape_toolbar02"
+            android:text="הוספת קטגוריה+"
+            android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/addCategoryBtn"
-        android:layout_width="302dp"
-        android:layout_height="64dp"
-        android:layout_above="@+id/bottomB"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="550dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="-11dp"
-        android:layout_toStartOf="@+id/addP"
-        android:layout_weight="1"
-        android:background="@drawable/shape_toolbar02"
-        android:text="הוספת ספר+"
-        android:textColor="@color/white" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="550dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="7dp"
-        android:src="@drawable/file_photo"
-        app:tint="@android:color/white"
-        android:backgroundTint="@color/purple"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="550dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="7dp"
+            android:backgroundTint="@color/purple"
+            android:src="@drawable/file_photo"
+            app:tint="@android:color/white"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </LinearLayout>
 </RelativeLayout>

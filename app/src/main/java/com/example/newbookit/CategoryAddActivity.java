@@ -75,7 +75,7 @@ private String category = "";
     private void validataData()
     {
         //get data
-        String category = BookEt.getText().toString().trim();
+        category = BookEt.getText().toString().trim();
         //vvalidate if not empty
 
         if (TextUtils.isEmpty(category)){

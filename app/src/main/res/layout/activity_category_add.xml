@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="הוסף ספר חדש"
+            android:text="הוסף קטגוריה"
             android:textColor="@color/white"
             android:textSize="28sp" />
 

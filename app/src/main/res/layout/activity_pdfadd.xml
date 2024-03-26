@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PDFaddActivity">
+
+
+<!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="235dp"
+
+        android:background="@drawable/shape_toolbar02">
+
+        <!--Back button-->
+        <ImageButton
+            android:id="@+id/backbtnpdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/exit" />
+
+        <!--icon image-->
+
+        <ImageView
+            android:id="@+id/iconIv"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_below="@+id/backbtnpdf"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginTop="-19dp"
+            android:layout_marginEnd="112dp"
+            android:src="@drawable/booklogo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iconIv"
+            android:layout_alignEnd="@+id/iconIv"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-28dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="הוספת ספר חדש"
+            android:textColor="@color/white"
+            android:textSize="28sp" />
+
+
+        <!--Attach PDF button-->
+
+        <ImageButton
+            android:id="@+id/attachBtnpdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/file_photo" />
+
+
+
+
+    </RelativeLayout>
+
+    <!--Input Title-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleTil"
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="28dp"
+        app:hintEnabled="false">
+
+
+        <EditText
+            android:id="@+id/titleEtPdf"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/shap_button03"
+            android:drawableStart="@drawable/file_photo"
+            android:drawablePadding="18dp"
+            android:hint="כותרת הספר"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="18dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textSize="16dp" />
+
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+     <!--input Descripiton-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/descriptionTil"
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="28dp"
+        android:layout_below="@+id/titleTil"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/descriptionEtPdf"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/shap_button03"
+            android:drawableStart="@drawable/file_photo"
+            android:drawablePadding="18dp"
+            android:hint="תיאור ספר"
+            android:inputType="textMultiLine|textCapCharacters"
+            android:padding="18dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Pick Category from dialog-->
+    <TextView
+        android:id="@+id/categoryTv"
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptionTil"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/shap_button03"
+        android:drawableStart="@drawable/ic_cate_gray"
+        android:drawableEnd="@drawable/ic_down_gray"
+        android:drawablePadding="18dp"
+        android:gravity="center_vertical"
+        android:hint="קטגוריית ספרים"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:textSize="16dp" />
+
+<!--Button: Upload PDF -->
+    <Button
+        android:id="@+id/submitBtnPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryTv"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="28dp"
+        android:text="הוספה"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
