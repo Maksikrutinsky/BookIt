@@ -76,7 +76,7 @@
         app:itemTextColor="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.navTheme"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/navigation_drawer_menu"/>
+        app:menu="@menu/navigation_drawer_menu_user"/>
 
 
 

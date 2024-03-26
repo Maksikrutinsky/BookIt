@@ -2,160 +2,123 @@ package com.example.newbookit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
+
+public class DashboardAdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-import java.util.ArrayList;
+    DrawerLayout drawerLayout;
+    BottomNavigationView bottomNavigationView;
+    FragmentManager fragmentManager;
+    Toolbar toolbar;
+    FloatingActionButton fab;
 
-public class DashboardAdminActivity extends AppCompatActivity {
-
-    private FirebaseAuth firebaseAuth;
-    TextView subTitleTv;
-    ImageButton logoutBtn;
-     EditText searchEt;
-    Button addCategoryBtn;
-    RecyclerView categoriesRv;
-    FloatingActionButton addPdfFab;
-//arrayList to store category
-    private ArrayList<ModelCaegory> categoryArrayList;
-    private AdapterCategory adapterCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard_admin);
-//        super.onCreate(savedInstanceState);
-//        View rootView = new View(this);
-//        setContentView(rootView);
 
 
-        searchEt = (EditText)findViewById(R.id.searchEt);
-        subTitleTv = (TextView)findViewById(R.id.subTitleTv);
-        logoutBtn = (ImageButton)findViewById(R.id.logoutBtn);
-        addCategoryBtn = (Button)findViewById(R.id.addCategoryBtn);
-        firebaseAuth = FirebaseAuth.getInstance();
-        categoriesRv = (RecyclerView)findViewById(R.id.CategoriesRv);
-        addPdfFab = (FloatingActionButton)findViewById(R.id.addP);
-        checkUser();
-        loadCategories();
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                checkUser();
-                loadCategories();
+    fab = findViewById(R.id.fab);
+    toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+
+    drawerLayout = findViewById(R.id.drawer_layout);
+    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+    NavigationView navigationView = findViewById(R.id.navigation_drawer);
+        navigationView.setNavigationItemSelectedListener(this);
+
+    bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setBackground(null);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int itemId = item.getItemId();
+            if (itemId == R.id.bottom_home){
+                openFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.bottom_short){
+                openFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.bottom_subscription){
+                openFragment(new HomeFragment());
+                return true;
+            } else if (itemId == R.id.bottom_library){
+                openFragment(new HomeFragment());
+                return true;
             }
-        });
-        //handle Click,start Book add screen
-        searchEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                //called as and when user type each letter
-                try {
-                    adapterCategory.getFilter().filter(s);
-                }
-                catch (Exception e)
-                {
-
-                }
+            return false;
+        }
+    });
 
 
-            }
+    fragmentManager = getSupportFragmentManager();
+    openFragment(new HomeFragment());
 
-            @Override
-            public void afterTextChanged(Editable editable) {
 
-            }
-        });
+        fab.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(DashboardAdminActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+        }
+    });
+}
 
 
 
-
-
-        addCategoryBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DashboardAdminActivity.this,CategoryAddActivity.class));
-            }
-        });
-          //handle Click,Start PDF add Screen
-        addPdfFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent( DashboardAdminActivity.this,PDFaddActivity.class));
-            }
-        });
-
-
-    }
-    private void loadCategories() {
-        //init arayList
-        categoryArrayList = new ArrayList<>();
-        //get all categories from firebase Categories
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Categories");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-               //clear arraylist before adding data into it;
-                categoryArrayList.clear();
-                for(DataSnapshot ds:snapshot.getChildren())
-                {
-                    //get data
-                    ModelCaegory model= ds.getValue(ModelCaegory.class);
-
-                    //add to arrayList
-                    categoryArrayList.add(model);
-
-                }
-                adapterCategory =  new AdapterCategory(DashboardAdminActivity.this,categoryArrayList);
-                categoriesRv.setAdapter(adapterCategory);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    private void checkUser() {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser == null){
-            startActivity(new Intent(this, MainActivity.class));
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_addBook){
+            startActivity(new Intent(DashboardAdminActivity.this, AddBookActivity.class));
             finish();
         }
-        else {
-            String email = firebaseUser.getEmail();
-            subTitleTv.setText(email);
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
+
+    private void openFragment(Fragment fragment){
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
+
 }
