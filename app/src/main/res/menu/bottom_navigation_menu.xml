@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/bottom_home"
-        android:title="Home"
+        android:title="התנתקות"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:id="@+id/bottom_short"
-        android:title="Short"
+        android:title="השאלות שלי"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
@@ -17,12 +17,12 @@
 
     <item
         android:id="@+id/bottom_subscription"
-        android:title="Subscription"
+        android:title="חיפוש ספרים"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:id="@+id/bottom_library"
-        android:title="Library"
+        android:title="דף הבית"
         android:icon="@drawable/ic_baseline_home_24"/>
 
 </menu>

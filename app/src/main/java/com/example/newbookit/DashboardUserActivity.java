@@ -108,10 +108,6 @@ public class DashboardUserActivity extends AppCompatActivity implements Navigati
             Toast.makeText(this,"Movies", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.nav_music) {
             openFragment(new HomeFragment());
-        } else if (itemId == R.id.nav_news) {
-            Toast.makeText(this,"News", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.nav_sports) {
-            Toast.makeText(this,"Sports", Toast.LENGTH_SHORT).show();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
