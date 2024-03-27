@@ -21,9 +21,6 @@
             android:name=".PDFaddActivity"
             android:exported="false" />
         <activity
-            android:name=".PDFaddActivity"
-            android:exported="false" />
-        <activity
             android:name=".userprofileActivity"
             android:exported="false" />
         <activity
@@ -39,10 +36,13 @@
             android:name=".DashboardUserActivity"
             android:exported="false" />
         <activity
-            android:name=".AddBookActivity"
+            android:name=".SplashActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PdfListAdminActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -51,7 +51,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".AddBookActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

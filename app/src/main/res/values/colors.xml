@@ -5,8 +5,14 @@
     <color name="gray">#cccccc</color>
     <color name="purple">#560bad</color>
     <color name="gray02">#EDEDED</color>
-<<<<<<< HEAD
-=======
     <color name="perpel">#8B6499</color>
->>>>>>> 2d7811043a2760a523fe2f96906d26f38ca3c655
+    <color name="teal_700">#FF018786</color>
+    <color name="gray01">#c5c5c5</color>
+    <color name="gray03">#EDEDED</color>
+    <color name="gray04">#FBFBFB</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+
+
 </resources>

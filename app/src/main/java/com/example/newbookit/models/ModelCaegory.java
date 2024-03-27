@@ -1,4 +1,4 @@
-package com.example.newbookit;
+package com.example.newbookit.models;
 
 public class ModelCaegory {
     //use same spllings for model  variables as in firebase

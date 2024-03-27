@@ -1,6 +1,9 @@
-package com.example.newbookit;
+package com.example.newbookit.filters;
 
 import android.widget.Filter;
+
+import com.example.newbookit.adapters.AdapterCategory;
+import com.example.newbookit.models.ModelCaegory;
 
 import java.util.ArrayList;
 public class FilterCategory extends Filter {
