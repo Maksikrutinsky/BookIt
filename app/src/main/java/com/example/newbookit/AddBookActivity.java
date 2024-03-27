@@ -3,21 +3,23 @@ package com.example.newbookit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class DashboardAdminActivity extends AppCompatActivity {
+public class AddBookActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     TextView subTitleTv;
@@ -45,7 +47,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard_admin);
+        setContentView(R.layout.activity_add_book);
 //        super.onCreate(savedInstanceState);
 //        View rootView = new View(this);
 //        setContentView(rootView);
@@ -58,15 +60,15 @@ public class DashboardAdminActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         categoriesRv = (RecyclerView)findViewById(R.id.CategoriesRv);
         addPdfFab = (FloatingActionButton)findViewById(R.id.addP);
-        checkUser();
         loadCategories();
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.signOut();
+                //firebaseAuth.signOut();
+                //checkUser();
+                //loadCategories();
                 checkUser();
-                loadCategories();
             }
         });
         //handle Click,start Book add screen
@@ -75,6 +77,9 @@ public class DashboardAdminActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
+
+
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
@@ -100,18 +105,17 @@ public class DashboardAdminActivity extends AppCompatActivity {
 
 
 
-
         addCategoryBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardAdminActivity.this,CategoryAddActivity.class));
+                startActivity(new Intent(AddBookActivity.this,CategoryAddActivity.class));
             }
         });
           //handle Click,Start PDF add Screen
         addPdfFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent( DashboardAdminActivity.this,PDFaddActivity.class));
+                startActivity(new Intent( AddBookActivity.this,PDFaddActivity.class));
             }
         });
 
@@ -137,7 +141,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
                     categoryArrayList.add(model);
 
                 }
-                adapterCategory =  new AdapterCategory(DashboardAdminActivity.this,categoryArrayList);
+                adapterCategory =  new AdapterCategory(AddBookActivity.this,categoryArrayList);
                 categoriesRv.setAdapter(adapterCategory);
             }
 
@@ -147,15 +151,37 @@ public class DashboardAdminActivity extends AppCompatActivity {
             }
         });
     }
-    private void checkUser() {
+
+
+    public void checkUser() {
+
+
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser == null){
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
-        else {
-            String email = firebaseUser.getEmail();
-            subTitleTv.setText(email);
-        }
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userType = ""+snapshot.child("userType").getValue();
+                if (userType.equals("user")){
+                    startActivity(new Intent(AddBookActivity.this, DashboardUserActivity.class));
+                    finish();
+                }
+                else if(userType.equals("admin")){
+                    startActivity(new Intent(AddBookActivity.this, DashboardAdminActivity.class));
+                    finish();
+                }
+                else if(userType.equals("librarion")){
+                    startActivity(new Intent(AddBookActivity.this, DashboardLibrarianActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
 }

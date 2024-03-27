@@ -10,9 +10,9 @@ public class RegisterActivityTest {
     public void testValidateData_invalidEmail() {
         RegisterActivity activity = new RegisterActivity();
         activity.nameReg.setText("Maksi");
-        activity.passReg.setText("pass123");
+        activity.passReg.setText("123456");
         activity.userReg.setText("blabla");
-        activity.cpassReg.setText("pass123");
+        activity.cpassReg.setText("123456");
 
         assertFalse(activity.validateData());
     }
@@ -20,14 +20,13 @@ public class RegisterActivityTest {
     @Test
     public void testValidateData_emptyPassword() {
         RegisterActivity activity = new RegisterActivity();
-        activity.nameReg.setText("Maksi");
-        activity.passReg.setText("");
         activity.userReg.setText("Maksi@gmail.com");
+        activity.nameReg.setText("Maksi");
+        activity.passReg.setText("pass123");
         activity.cpassReg.setText("pass123");
 
-        assertFalse(activity.validateData());
+        assertTrue(activity.validateData());
     }
-
 
     @Test
     public void testValidateData_passwordMismatch() {

@@ -5,4 +5,8 @@
     <color name="gray">#cccccc</color>
     <color name="purple">#560bad</color>
     <color name="gray02">#EDEDED</color>
+<<<<<<< HEAD
+=======
+    <color name="perpel">#8B6499</color>
+>>>>>>> 2d7811043a2760a523fe2f96906d26f38ca3c655
 </resources>
