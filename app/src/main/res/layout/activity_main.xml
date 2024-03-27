@@ -12,7 +12,7 @@
         android:id="@+id/iconIv"
         android:background="@drawable/logo"
         android:layout_width="161dp"
-        android:layout_height="72dp"
+        android:layout_height="71dp"
         android:foregroundGravity="center"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
