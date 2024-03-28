@@ -161,7 +161,7 @@ public class MyApplication extends Application {
                         Log.d(TAG, "onSuccess: " + pdfTitle + " successfylly got the file");
 
 
-                        //set to pdfview
+//                        set to pdfview
 //                        pdfView.fromBytes(bytes)
 //                                .pages(0) //show only first page
 //                                .spacing(0)

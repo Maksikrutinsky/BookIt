@@ -55,7 +55,7 @@ public class PDFaddActivity extends AppCompatActivity {
 
     private static final int PDF_PICK_CODE = 1000;
     //TAG
-    private static final String TAG = "Add_PDF_Tag";
+    private static final String TAG = "ADD_PDF_TAG";
     //firebase auth
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -75,7 +75,8 @@ public class PDFaddActivity extends AppCompatActivity {
 
         //init firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
-        loadPdfcategories();
+        loadPdfCategories();
+
         //setup progress dialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -115,43 +116,9 @@ public class PDFaddActivity extends AppCompatActivity {
 
     }
 
+    private String title= "", description = "";
 
 
-    private void loadPdfcategories() {
-        Log.d(TAG, "loadPdfCategories: Loading pdf categories...");
-        categoryTitleArrayList = new ArrayList<>();
-        categoryIdArrayList = new ArrayList<>();
-
-        //db refernce to load categories...db > Categories
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Categories");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull  DataSnapshot snapshot) {
-                categoryTitleArrayList.clear(); //clear before adding data
-                categoryIdArrayList.clear();
-                for (DataSnapshot ds: snapshot.getChildren()){
-
-                    //get id and title of category
-                    String categoryId = ""+ds.child("id").getValue();
-                    String categoryTitle = ""+ds.child("category").getValue();
-
-                    //add to respective arraylists
-                    categoryTitleArrayList.add(categoryTitle);
-                    categoryIdArrayList.add(categoryId);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error)
-            {
-                validataData();
-            }
-        });
-
-    }
-//    private String title="",description="";
-private String title= "", description = "";
     private void validataData() {
         //Step 1 : validate data
         Log.d(TAG, "validataData: validating data...");
@@ -181,6 +148,7 @@ private String title= "", description = "";
 
     }
 
+
     private void uploadpdfToStorage()
     {
         //Step2: Upload pdf to firebase
@@ -189,29 +157,29 @@ private String title= "", description = "";
         progressDialog.setMessage("Uploading  PDF..");
         progressDialog.show();
 
-long timestamp =  System.currentTimeMillis();
+        long timestamp =  System.currentTimeMillis();
         //parth of pdf in firebase storage
         String filepathAndName = "Books/"+timestamp;
         //storage refernce
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(filepathAndName);
         storageReference.putFile(pdfUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>(){
-        @Override
-        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-            Log.d(TAG, "onSuccess: PDF uploaded to storage....");
-            Log.d(TAG, "onSuccess: getting PDF url...");
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d(TAG, "onSuccess: PDF uploaded to storage....");
+                        Log.d(TAG, "onSuccess: getting PDF url...");
 
 
-            //get PDF Url
-            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-            while (!uriTask.isSuccessful());
-            String uploadedPdfurl = ""+uriTask.getResult();
+                        //get PDF Url
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isSuccessful());
+                        String uploadedPdfurl = ""+uriTask.getResult();
 
-            //upload to firebase db
-            uploadPdfinfoTodb(uploadedPdfurl,timestamp);
-            
-        }
+                        //upload to firebase db
+                        uploadPdfinfoTodb(uploadedPdfurl,timestamp);
 
-    })
+                    }
+
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -221,6 +189,7 @@ long timestamp =  System.currentTimeMillis();
                     }
                 });
     }
+
 
     private void uploadPdfinfoTodb(String uploadedPdfurl, long timestamp)
     {

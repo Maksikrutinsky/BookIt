@@ -53,4 +53,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     testImplementation("org.mockito:mockito-core:4.0.0")
 
+// implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1"
+
+    //pdf view libary
+
+
 }

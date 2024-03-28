@@ -18,7 +18,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newbookit.MyApplication;
+import com.example.newbookit.PdfEditAActivity;
 import com.example.newbookit.R;
+import com.example.newbookit.filters.FilterPdfAdmin;
 import com.example.newbookit.models.ModelPdf;
 
 import java.util.ArrayList;
@@ -31,9 +33,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
     public ArrayList<ModelPdf> pdfArrayList, filterList;
 
     //view binding row_pdf_admin.xml
-//    private RowPdfAdminBinding binding;
-//
-//    private FilterPdfAdmin filter;
+    private FilterPdfAdmin filter;
 
     private static final String TAG = "PDF_ADAPTER_TAG";
 
@@ -87,14 +87,14 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                 "" + categoryId,
                 holder.categoryTv);
 
-        //we dont need page number here, pass null
-//        MyApplication.loadPdfFromUrlSinglePage(
-//                "" + pdfUrl,
-//                "" + title,
+//        we dont need page number here, pass null
+        MyApplication.loadPdfFromUrlSinglePage(
+                "" + pdfUrl,
+                "" + title,
 //                holder.pdfView
-//                holder.progressBar,
-//                null
-//        );
+                holder.progressBar,
+                null
+        );
 
         MyApplication.loadPdfSize(
                 "" + pdfUrl,
@@ -138,9 +138,9 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                         //handle dialog option click
                         if (which == 0) {
                             //Edit clicked, Open PdfEditActivity to edit the book info
-//                            Intent intent = new Intent(context, PdfEditActivity.class);
-//                            intent.putExtra("bookId", bookId);
-//                            context.startActivity(intent);
+                            Intent intent = new Intent(context, PdfEditAActivity.class);
+                            intent.putExtra("bookId", bookId);
+                            context.startActivity(intent);
                         } else if (which == 1) {
                             //Delete Clicked
                             MyApplication.deleteBook(
@@ -161,13 +161,13 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
         return pdfArrayList.size(); //return number of records | list size
     }
 
-//    @Override
-//    public Filter getFilter() {
-//        if (filter == null) {
-//            filter = new FilterPdfAdmin(filterList, this);
-//        }
-//        return filter;
-//    }
+
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new FilterPdfAdmin(filterList, this);
+        }
+        return filter;
+    }
 
     /*View Holder class for row_pdf_admin.xml*/
     static class HolderPdfAdmin extends RecyclerView.ViewHolder {
